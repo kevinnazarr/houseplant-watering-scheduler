@@ -1,0 +1,648 @@
+/* ========================================
+   Design Tokens
+   Calm botanical-minimal system: soft neutral
+   background, white surfaces, one desaturated
+   green accent. Status colors are cues only —
+   meaning is always carried by text.
+   ======================================== */
+:root {
+  /* Neutrals (green-tinted gray family, consistent warmth) */
+  --color-bg: #f6f7f4;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #fafbf9;
+  --color-text: #1d2721;
+  --color-text-secondary: #46524a;
+  --color-text-muted: #6a776e;
+  --color-border: #e5e9e3;
+  --color-border-strong: #d3dad2;
+
+  /* Single brand accent (desaturated green) */
+  --color-accent: #38714f;
+  --color-accent-hover: #2c5c40;
+  --color-accent-soft: #edf4ee;
+  --color-accent-ring: rgba(56, 113, 79, 0.18);
+
+  /* Status system */
+  --color-overdue: #c05b41;
+  --color-overdue-bg: #fbf0eb;
+  --color-overdue-text: #99381f;
+
+  --color-due-today: #bd8b21;
+  --color-due-today-bg: #fbf4e0;
+  --color-due-today-text: #7c580c;
+
+  --color-upcoming: #55936b;
+  --color-upcoming-bg: #edf4ee;
+  --color-upcoming-text: #2c6042;
+
+  /* Typography */
+  --font-family:
+    'Outfit', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 0.9375rem;
+  --font-size-lg: 1.0625rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.625rem;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Radius (cards 16, controls 10, pills full) */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+
+  /* Shadows (subtle, tinted to background hue) */
+  --shadow-sm: 0 1px 2px rgba(29, 39, 33, 0.04);
+  --shadow-md: 0 8px 24px -12px rgba(29, 39, 33, 0.12);
+}
+
+/* ========================================
+   Reset & Base
+   ======================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Consistent, visible keyboard focus across interactive elements */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ========================================
+   App Layout
+   ======================================== */
+.app {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-xl) calc(var(--space-2xl) * 1.5);
+}
+
+.app-header {
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-header h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.app-subtitle {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-base);
+  font-weight: 400;
+}
+
+.app-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+/* ========================================
+   Plant Form
+   ======================================== */
+.plant-form {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--space-lg);
+  align-items: start;
+}
+
+.plant-form h2 {
+  grid-column: 1 / -1;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.form-group label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.required {
+  color: var(--color-overdue);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.5625rem 0.75rem;
+  font-size: var(--font-size-base);
+  font-family: var(--font-family);
+  color: var(--color-text);
+  background: var(--color-surface-subtle);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 2.75rem;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #98a49b;
+}
+
+.form-group input:hover,
+.form-group textarea:hover {
+  border-color: #b9c4ba;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  background: var(--color-surface);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-ring);
+}
+
+.form-group input[aria-invalid='true'],
+.form-group textarea[aria-invalid='true'] {
+  border-color: var(--color-overdue);
+}
+
+.form-group input[aria-invalid='true']:focus,
+.form-group textarea[aria-invalid='true']:focus {
+  box-shadow: 0 0 0 3px rgba(192, 91, 65, 0.16);
+}
+
+.error-message {
+  font-size: var(--font-size-xs);
+  line-height: 1.4;
+  color: var(--color-overdue-text);
+}
+
+.plant-form .btn-primary {
+  grid-column: 1 / -1;
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  font-family: var(--font-family);
+  letter-spacing: 0.005em;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.08s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Primary form submit (Add Plant) */
+.btn-primary {
+  background: var(--color-accent);
+  color: #ffffff;
+  width: 100%;
+  padding: 0.625rem 1.5rem;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  margin-top: var(--space-xs);
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+}
+
+/* Water Now: the primary card action (solid accent) */
+.btn-water {
+  background: var(--color-accent);
+  color: #ffffff;
+  font-weight: 600;
+  flex: 1.35;
+}
+
+.btn-water:hover {
+  background: var(--color-accent-hover);
+}
+
+/* Delete: visually secondary (quiet ghost; red only on hover intent) */
+.btn-delete {
+  background: transparent;
+  color: var(--color-text-muted);
+  border-color: transparent;
+  flex: 1;
+}
+
+.btn-delete:hover {
+  background: var(--color-overdue-bg);
+  color: var(--color-overdue-text);
+  border-color: rgba(192, 91, 65, 0.35);
+}
+
+/* ========================================
+   Dashboard Summary
+   ======================================== */
+.dashboard-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  padding: var(--space-xs) 0;
+}
+
+.summary-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3125rem 0.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.summary-item strong {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+.summary-item--overdue {
+  background: var(--color-overdue-bg);
+  border-color: rgba(192, 91, 65, 0.35);
+  color: var(--color-overdue-text);
+}
+
+.summary-item--overdue strong {
+  color: var(--color-overdue-text);
+}
+
+.summary-item--due-today {
+  background: var(--color-due-today-bg);
+  border-color: rgba(189, 139, 33, 0.4);
+  color: var(--color-due-today-text);
+}
+
+.summary-item--due-today strong {
+  color: var(--color-due-today-text);
+}
+
+.summary-item--upcoming {
+  background: var(--color-upcoming-bg);
+  border-color: rgba(85, 147, 107, 0.4);
+  color: var(--color-upcoming-text);
+}
+
+.summary-item--upcoming strong {
+  color: var(--color-upcoming-text);
+}
+
+/* ========================================
+   Plant List
+   ======================================== */
+.plant-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+@media (min-width: 640px) {
+  .plant-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .plant-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ========================================
+   Plant Card
+   ======================================== */
+.plant-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  transition:
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.plant-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border-strong);
+}
+
+/* Status treatments: left edge is a scan cue, text carries the meaning */
+.plant-card--overdue {
+  border-left-color: var(--color-overdue);
+}
+
+.plant-card--due-today {
+  border-left-color: var(--color-due-today);
+}
+
+.plant-card--upcoming {
+  border-left-color: var(--color-upcoming);
+}
+
+.plant-card__header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.plant-card__name {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.plant-card__nickname {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.plant-card__details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.plant-card__frequency {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* Next watering date: the most noticeable element on the card */
+.plant-card__next-date {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-surface-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.plant-card__next-date .label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.plant-card__next-date .value {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+/* Tint the date block with its status so urgency scans at a glance */
+.plant-card--overdue .plant-card__next-date {
+  background: var(--color-overdue-bg);
+}
+
+.plant-card--overdue .plant-card__next-date .label {
+  color: var(--color-overdue-text);
+}
+
+.plant-card--due-today .plant-card__next-date {
+  background: var(--color-due-today-bg);
+}
+
+.plant-card--due-today .plant-card__next-date .label {
+  color: var(--color-due-today-text);
+}
+
+.plant-card--upcoming .plant-card__next-date {
+  background: var(--color-accent-soft);
+}
+
+.plant-card--upcoming .plant-card__next-date .label {
+  color: var(--color-upcoming-text);
+}
+
+/* Status chip: dot marker + text, never color alone */
+.plant-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  width: fit-content;
+  padding: 0.1875rem 0.625rem;
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.plant-card__status::before {
+  content: '';
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.plant-card__status--overdue {
+  background: var(--color-overdue-bg);
+  color: var(--color-overdue-text);
+  border-color: rgba(192, 91, 65, 0.35);
+}
+
+.plant-card__status--due-today {
+  background: var(--color-due-today-bg);
+  color: var(--color-due-today-text);
+  border-color: rgba(189, 139, 33, 0.4);
+}
+
+.plant-card__status--upcoming {
+  background: var(--color-upcoming-bg);
+  color: var(--color-upcoming-text);
+  border-color: rgba(85, 147, 107, 0.4);
+}
+
+.plant-card__note {
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.plant-card__note .label {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.plant-card__actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: auto;
+  padding-top: var(--space-sm);
+}
+
+.plant-card__actions .btn {
+  flex: 1;
+}
+
+/* ========================================
+   Empty State
+   ======================================== */
+.empty-state {
+  text-align: center;
+  padding: var(--space-2xl) var(--space-lg);
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-lg);
+}
+
+.empty-state__icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0 auto var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent-soft);
+  border-radius: 999px;
+  color: var(--color-accent);
+}
+
+.empty-state__icon svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.empty-state h2 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.empty-state p {
+  color: var(--color-text-muted);
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* ========================================
+   Responsive
+   ======================================== */
+@media (max-width: 720px) {
+  .app {
+    padding: var(--space-xl) var(--space-md) var(--space-2xl);
+  }
+
+  .plant-form {
+    grid-template-columns: 1fr;
+    padding: var(--space-lg) var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .plant-card {
+    padding: var(--space-md);
+  }
+
+  .plant-card__actions {
+    flex-direction: column;
+  }
+
+  .dashboard-summary {
+    justify-content: flex-start;
+  }
+}
+
+/* ========================================
+   Reduced Motion
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
